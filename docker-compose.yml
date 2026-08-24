@@ -14,7 +14,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: always
 
-  # Optional: Web UI to view tables and data in your browser
+  #  Web UI to view tables and data in your browser
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: socialix_pgadmin
