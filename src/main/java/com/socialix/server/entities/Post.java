@@ -6,7 +6,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "posts")
+@Table(
+        name = "posts",
+        indexes = {
+                @Index(name = "idx_posts_user_status", columnList = "user_id, status"),
+                @Index(name = "idx_posts_scheduler", columnList = "status, scheduled_timestamp")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,6 +39,10 @@ public class Post {
     private PostStatus status;
 
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     protected void onCreate() {
