@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -34,8 +35,18 @@ public class JwtUtil {
                 .compact();
     }
 
+    // Alias method used by JwtAuthenticationFilter
+    public String extractUsername(String token) {
+        return extractEmail(token);
+    }
+
     public String extractEmail(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    // Spring Security UserDetails validation overload
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        return validateToken(token, userDetails.getUsername());
     }
 
     public boolean validateToken(String token, String email) {

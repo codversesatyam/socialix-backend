@@ -1,6 +1,8 @@
 package com.socialix.server.security;
 
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +31,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/posts/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/posts/**" , "/api/ai/**" , "/api/ai/").permitAll()
                         .anyRequest().authenticated()
 
                 )
@@ -39,5 +41,7 @@ public class SecurityConfig {
         return httpSecurity.build();
 
     }
+
+
 
 }
